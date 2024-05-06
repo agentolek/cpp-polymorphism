@@ -25,34 +25,39 @@ class SDList
 public:
     class iterator
     {
-        SDNode *pointer;
         friend class SDList;
         iterator(SDNode *node) : pointer(node) {};
     public:
+        // if pointer isn't public, insert and remove need to be friends, which causes problems
+        // because iterator isn't a template 
+        SDNode *pointer;
         iterator& operator++() { pointer = pointer->next; return *this;};
         iterator& operator++(int) {auto retv = *this; pointer = pointer->next; return retv;};
         T& operator*() { return pointer->value; };
         bool operator!=(const iterator& it) {return pointer != it.pointer; };
+        bool operator==(const iterator& it) {return pointer == it.pointer; };
     };
 
     // default - force compiler to create default constructor, so no definition needed
     SDList() = default;
 
-    // konstruktor kopiujący (?)
-    SDList(const SDList& copyList)
+    // copy constructor - only takes LValues, allocates twice the memory
+    SDList(SDList& copyList)
     {
         *this = copyList;
     };
 
-    // a co to robi? to jest taki std::move dla naszego kontenera
-    // SDList(SDlist&& src)
-    // {
-    //     head = src.head;
-    //     src.head = nullptr;
-    // };
+    // RValues are temporary, LValues are eternal
+    // only takes RValues, the double ampersand signifies an RValue reference
+    SDList(SDList&& src)
+    {
+        head = src.head;
+        // src will now be converted to a hollow object
+        src.head = nullptr;
+    };
 
     // operator podstawienia
-    SDList& operator=(const SDList* source)
+    SDList& operator=(const SDList& source)
     {
         // this condition protects us against a = a causing undefined behavior
         if (this != &source)
@@ -66,12 +71,13 @@ public:
                 if (currNode == nullptr)
                 {
                     currNode = newNode;
+                    head = currNode;
                 }
                 else
                 {
                     currNode->next = newNode;
+                    currNode = currNode->next;
                 }
-                currNode = currNode->next;
                 srcNode = srcNode->next;
             }
         }
@@ -88,12 +94,13 @@ public:
     {
         return iterator(head);
     };
+
     iterator end() const
     {
         return iterator(nullptr);
     };
 
-    // METODY LISTY
+    // METODY LISTY -----------------------------------------
     void clear()
     {
         while(!empty())
@@ -130,6 +137,35 @@ public:
             delete toRemove;
         }
     };
+
+    void insert(iterator it, T val)
+    {   
+        SDNode* newNode = new SDNode(val, it.pointer->next);
+        it.pointer->next = newNode;
+    }
+
+    //TODO: after removal, iterator will point to nonexistent node
+    void remove(iterator removeIt)
+    {
+        if(removeIt != nullptr){
+            
+            // case if this is the first node
+            if (removeIt == begin())
+            {
+                head = removeIt.pointer->next;
+            }
+            // if any other node, previous node must now point to one after
+            for (auto it = begin(); it != end(); ++it)
+            {
+                if (it.pointer->next == removeIt.pointer)
+                {
+                    it.pointer->next = removeIt.pointer->next;
+                    break;
+                }
+            }    
+        }
+        return;
+    }
 
     friend std::ostream& operator<<(std::ostream& os, const SDList& lst)
     {
