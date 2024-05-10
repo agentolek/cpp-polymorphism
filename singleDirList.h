@@ -27,10 +27,8 @@ public:
     {
         friend class SDList;
         iterator(SDNode *node) : pointer(node) {};
-    public:
-        // if pointer isn't public, insert and remove need to be friends, which causes problems
-        // because iterator isn't a template 
         SDNode *pointer;
+    public:
         iterator& operator++() { pointer = pointer->next; return *this;};
         iterator& operator++(int) {auto retv = *this; pointer = pointer->next; return retv;};
         T& operator*() { return pointer->value; };
@@ -144,7 +142,7 @@ public:
         it.pointer->next = newNode;
     }
 
-    //TODO: after removal, iterator will point to nonexistent node
+    // warning: after removal, iterator will point to nonexistent node, but I don't think there is a good fix
     void remove(iterator removeIt)
     {
         if(removeIt != nullptr){
@@ -169,9 +167,10 @@ public:
 
     friend std::ostream& operator<<(std::ostream& os, const SDList& lst)
     {
-        os << '[';
-        for (auto ptr = lst.head; ptr != nullptr; ptr = ptr->next)
-            os << *ptr << " | ";
-        return os << ']';
+        for (const auto& member : lst)
+        {
+            os << "| " << member << " |\n";
+        }
+        return os;
     }
 };

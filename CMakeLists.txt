@@ -12,7 +12,7 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(googletest)
 
-set(PROJECT_SOURCES singleDirList.h)
+set(PROJECT_SOURCES singleDirList.h Logger.h IMessage.h simpleMessage.h userMessage.h)
 
 add_executable(main main.cpp ${PROJECT_SOURCES} )
 
