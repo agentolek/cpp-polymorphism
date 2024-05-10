@@ -59,6 +59,8 @@ int main()
     myLog.addMessage(&mess4);
     mess4 = mess5;
     cout << myLog;
+
+    // See if clear works
     myLog.clear();
     cout << myLog;
     return 0;
