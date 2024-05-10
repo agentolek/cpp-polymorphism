@@ -11,7 +11,7 @@ public:
     // Default constructor
     IMessage() = default;
 
-    IMessage(std::string message) : messageContent(message) {};
+    IMessage(const std::string& message) : messageContent(message) {};
 
     // Virtual destructor for polymorphism
     virtual ~IMessage() {}
