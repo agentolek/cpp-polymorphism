@@ -1,6 +1,5 @@
 #pragma once
 #include "IMessage.h"
-#include <string>
 
 class SimpleMessage : public IMessage
 {
@@ -15,7 +14,7 @@ public:
     SimpleMessage(const std::string& message, const std::string& sev) : IMessage(message) , sevText(sev) {};
 
     // Copy constructor
-    SimpleMessage(const SimpleMessage& other) 
+    SimpleMessage(const SimpleMessage& other)
     {
         *this = other;
     }

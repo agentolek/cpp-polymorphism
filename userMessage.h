@@ -1,6 +1,5 @@
 #pragma once
 #include "simpleMessage.h"
-#include <string>
 
 class UserMessage : public SimpleMessage
 {
