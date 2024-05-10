@@ -38,20 +38,26 @@ int main()
     // Logger accepts members of any class which derives from IMessage.
     Logger myLog;
 
-    SimpleMessage mess1("message1", "Error");
-    UserMessage mess2("message2", "Info", 12);
-    SimpleMessage mess3("message3", "Warning");
-
-    // check copy constructor
+    SimpleMessage mess1("OK1", "Info");
+    UserMessage mess2("OK2", "Info", 12);
+    SimpleMessage mess3("OK3", "Info");
     UserMessage mess4(mess2);
+
+    UserMessage mess5("Test", "Error", 0);
+    SimpleMessage mess6("Test", "Error");
+
+    // Expected message order (from top) - 2, 2, 1, 3
     
     // check assignment operator
     myLog.addMessage(&mess3);
-    mess3 = mess1;
-    myLog.addMessage(&mess3);
+    mess3 = mess6;
     myLog.addMessage(&mess1);
+    myLog.addMessage(&mess1);
+    myLog.removeMessage();
     myLog.addMessage(&mess2);
+    mess2 = mess5;
     myLog.addMessage(&mess4);
+    mess4 = mess5;
     cout << myLog;
     myLog.clear();
     cout << myLog;
