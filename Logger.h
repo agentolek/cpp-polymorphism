@@ -5,14 +5,14 @@
 
 class Logger
 {
-    SDList<IMessage*> myList;
+    SDList<std::shared_ptr<IMessage>> myList;
 public:
     ~Logger(){ myList.clear(); };
     Logger() = default;
 
     void addMessage(IMessage* mess)
     {
-        myList.pushFront(mess);
+        myList.pushFront(mess->clone());
     }
 
     void removeMessage()

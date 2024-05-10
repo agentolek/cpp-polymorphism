@@ -10,8 +10,10 @@ class SDList
         SDNode *next = nullptr;
 
         SDNode(const T& val, SDNode* nxt = nullptr)
-            : value(val), next(nxt)
-        {};
+        {
+            value = val;
+            next = nxt;
+        };
 
         friend std::ostream& operator<<(std::ostream& os, const SDNode& node)
         {

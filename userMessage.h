@@ -23,12 +23,19 @@ public:
         if (&other != this)
         {
             messageContent = other.messageContent;
+            setSeverity(other.severity());
+            id = other.id;
         }
         return *this;
     }
 
-    virtual std::ostream& write(std::ostream& os) const
+    virtual std::ostream& write(std::ostream& os) const override
     {
         return (os << "From id: " << id << ", '" << messageContent << "' Tag: " << severity());
+    }
+
+    virtual std::shared_ptr<IMessage> clone() const override
+    {
+        return std::make_shared<UserMessage>(*this);
     }
 };

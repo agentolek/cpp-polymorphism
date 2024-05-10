@@ -26,17 +26,28 @@ public:
         if (&other != this)
         {
             messageContent = other.messageContent;
+            setSeverity(other.severity());
         }
         return *this;
     }
 
-    virtual std::ostream& write(std::ostream& os) const
+    virtual std::ostream& write(std::ostream& os) const override
     {
         return (os << "Content: '" << messageContent << "' Severity: " << severity());
+    }
+
+    void setSeverity(const std::string& newSev)
+    {
+        sevText = newSev;
     }
 
     std::string severity() const
     {
         return sevText;
+    }
+
+    virtual std::shared_ptr<IMessage> clone() const override
+    {
+        return std::make_shared<SimpleMessage>(*this);
     }
 };

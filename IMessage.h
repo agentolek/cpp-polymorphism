@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <iostream>
+#include <memory>
 
 class IMessage
 {
@@ -40,4 +41,6 @@ public:
     }
 
     virtual std::ostream& write(std::ostream& os) const = 0;
+
+    virtual std::shared_ptr<IMessage> clone() const = 0;
 };
