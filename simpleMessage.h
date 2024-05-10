@@ -12,7 +12,7 @@ public:
     SimpleMessage() = default;
 
     // Call base class constructor
-    SimpleMessage(std::string message, std::string sev) : IMessage(message) , sevText(sev) {};
+    SimpleMessage(const std::string& message, const std::string& sev) : IMessage(message) , sevText(sev) {};
 
     // Copy constructor
     SimpleMessage(const SimpleMessage& other) 

@@ -9,7 +9,7 @@ public:
     // Virtual destructor for polymorphism
     virtual ~UserMessage() {}
 
-    UserMessage(std::string message, std::string sev, int userId) : SimpleMessage(message, sev), id(userId) {};
+    UserMessage(const std::string& message, const std::string& sev, int userId) : SimpleMessage(message, sev), id(userId) {};
 
     // Copy constructor
     UserMessage(const UserMessage& other) 
