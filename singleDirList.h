@@ -142,7 +142,6 @@ public:
         it.pointer->next = newNode;
     }
 
-    // warning: after removal, iterator will point to nonexistent node, but I don't think there is a good fix
     void remove(iterator removeIt)
     {
         if(removeIt != nullptr){
@@ -151,6 +150,8 @@ public:
             if (removeIt == begin())
             {
                 head = removeIt.pointer->next;
+                delete removeIt.pointer;
+                return;
             }
             // if any other node, previous node must now point to one after
             for (auto it = begin(); it != end(); ++it)
@@ -158,6 +159,7 @@ public:
                 if (it.pointer->next == removeIt.pointer)
                 {
                     it.pointer->next = removeIt.pointer->next;
+                    delete removeIt.pointer;
                     break;
                 }
             }    
