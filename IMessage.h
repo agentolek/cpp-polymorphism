@@ -32,7 +32,7 @@ public:
     };
 
     // severity as a pure virtual function to create abstract interface 
-    virtual std::string Severity() const = 0;
+    virtual std::string severity() const = 0;
 
     friend std::ostream& operator<<(std::ostream& os, const IMessage* mess)
     {

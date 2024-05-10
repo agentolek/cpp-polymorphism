@@ -29,6 +29,6 @@ public:
 
     virtual std::ostream& write(std::ostream& os) const
     {
-        return (os << "From id: " << id << ", '" << messageContent << "' Tag: " << Severity());
+        return (os << "From id: " << id << ", '" << messageContent << "' Tag: " << severity());
     }
 };

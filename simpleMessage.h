@@ -4,7 +4,7 @@
 
 class SimpleMessage : public IMessage
 {
-    std::string severity;
+    std::string sevText;
 public:
     // Virtual destructor for polymorphism
     virtual ~SimpleMessage() {}
@@ -12,7 +12,7 @@ public:
     SimpleMessage() = default;
 
     // Call base class constructor
-    SimpleMessage(std::string message, std::string sev) : IMessage(message) , severity(sev) {};
+    SimpleMessage(std::string message, std::string sev) : IMessage(message) , sevText(sev) {};
 
     // Copy constructor
     SimpleMessage(const SimpleMessage& other) 
@@ -32,11 +32,11 @@ public:
 
     virtual std::ostream& write(std::ostream& os) const
     {
-        return (os << "Content: '" << messageContent << "' Severity: " << Severity());
+        return (os << "Content: '" << messageContent << "' Severity: " << severity());
     }
 
-    std::string Severity() const
+    std::string severity() const
     {
-        return severity;
+        return sevText;
     }
 };
